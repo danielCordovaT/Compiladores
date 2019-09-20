@@ -9,6 +9,7 @@
 //token
 %token ID NUM REAL PUNTCOM INICIO FIN
 //producciones 
+
 %%
 raiz: INICIO instruccion FIN;
 instruccion: instruccion ID;
