@@ -16,9 +16,13 @@ instruccion: instruccion ID;
 instruccion: instruccion NUM;
 instruccion: instruccion REAL;
 instruccion: instruccion  ID '=' term PUNTCOM| ;
-term:factor ope factor|factor;
+instruccion: instruccion  '+'  term1 | instruccion '-' term1 ;
+instruccion: term1;
+term1:term1 op NUM; 
+term1: NUM;
+op: '*' | '/' ;
+term:factor '+' factor|factor;
 factor: NUM|ID;
-ope:'+'|'-'|'*'|'/';
 %%
 
 
