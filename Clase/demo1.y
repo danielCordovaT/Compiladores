@@ -7,14 +7,13 @@
 %}
 
 //token
-%token ID NUM REAL PUNTCOM INICIO FIN
+%token ID NUM  PUNTCOM INICIO FIN
 //producciones 
 
 %%
 raiz: INICIO instruccion FIN;
 instruccion: instruccion ID;
 instruccion: instruccion NUM;
-instruccion: instruccion REAL;
 instruccion: instruccion  ID '=' term PUNTCOM| ;
 instruccion: instruccion  '+'  term1 | instruccion '-' term1 ;
 instruccion: term1;
@@ -57,7 +56,18 @@ int yylex(){
 		}
 			
 	
-		if(c=='-') continue;
+		if(c=='-'){
+			int i=0;
+			do{
+				lexema[i++]=c;
+				c=getchar();
+			}while(isdigit(c)|| c=='.');
+			
+			ungetc(c,stdin);
+			lexema[i]=0;
+			return NUM;
+
+		}
 		if(isdigit(c)){
 			int i=0;
 			do{
@@ -71,32 +81,8 @@ int yylex(){
 		
 		}
 		
-		if(c=='-') continue;
-		if(isdigit(c)){
-			int i=0;
-			do{
-				lexema[i++]=c;
-				c=getchar();
-			}while(isdigit(c));
-			
-			ungetc(c,stdin);
-			lexema[i]=0;
-			
 		
-		}
-		if(c=='.')continue;
-		if(isdigit(c)){
-			int i=0;
-			do{
-				lexema[i++]=c;
-				c=getchar();
-			}while(isdigit(c));
-			
-			ungetc(c,stdin);
-			lexema[i]=0;
-			
-			return REAL;
-		}
+		
 		return c;
 	}
 }
