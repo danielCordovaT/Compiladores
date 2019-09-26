@@ -1,0 +1,249 @@
+Terminales no usados en la gramática
+
+   INICIO
+   FIN
+
+
+Gramática
+
+    0 $accept: listainstr $end
+
+    1 listainstr: listainstr instr
+    2           | %empty
+
+    3 instr: ID ':' IGUAL expr PUNTCOM
+
+    4 expr: expr MAS term
+    5     | term
+    6     | expr MENOS term
+
+    7 term: term '*' fact
+    8     | term '/' fact
+    9     | fact
+
+   10 fact: NUM
+   11     | ID
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'*' (42) 7
+'/' (47) 8
+':' (58) 3
+error (256)
+ID (258) 3 11
+NUM (259) 10
+PUNTCOM (260) 3
+INICIO (261)
+FIN (262)
+MENOS (263) 6
+MAS (264) 4
+IGUAL (265) 3
+
+
+No terminales con las reglas donde aparecen
+
+$accept (14)
+    en la izquierda: 0
+listainstr (15)
+    en la izquierda: 1 2, en la derecha: 0 1
+instr (16)
+    en la izquierda: 3, en la derecha: 1
+expr (17)
+    en la izquierda: 4 5 6, en la derecha: 3 4 6
+term (18)
+    en la izquierda: 7 8 9, en la derecha: 4 5 6 7 8
+fact (19)
+    en la izquierda: 10 11, en la derecha: 7 8 9
+
+
+Estado 0
+
+    0 $accept: . listainstr $end
+
+    $default  reduce usando la regla 2 (listainstr)
+
+    listainstr  ir al estado 1
+
+
+Estado 1
+
+    0 $accept: listainstr . $end
+    1 listainstr: listainstr . instr
+
+    $end  desplazar e ir al estado 2
+    ID    desplazar e ir al estado 3
+
+    instr  ir al estado 4
+
+
+Estado 2
+
+    0 $accept: listainstr $end .
+
+    $default  aceptar
+
+
+Estado 3
+
+    3 instr: ID . ':' IGUAL expr PUNTCOM
+
+    ':'  desplazar e ir al estado 5
+
+
+Estado 4
+
+    1 listainstr: listainstr instr .
+
+    $default  reduce usando la regla 1 (listainstr)
+
+
+Estado 5
+
+    3 instr: ID ':' . IGUAL expr PUNTCOM
+
+    IGUAL  desplazar e ir al estado 6
+
+
+Estado 6
+
+    3 instr: ID ':' IGUAL . expr PUNTCOM
+
+    ID   desplazar e ir al estado 7
+    NUM  desplazar e ir al estado 8
+
+    expr  ir al estado 9
+    term  ir al estado 10
+    fact  ir al estado 11
+
+
+Estado 7
+
+   11 fact: ID .
+
+    $default  reduce usando la regla 11 (fact)
+
+
+Estado 8
+
+   10 fact: NUM .
+
+    $default  reduce usando la regla 10 (fact)
+
+
+Estado 9
+
+    3 instr: ID ':' IGUAL expr . PUNTCOM
+    4 expr: expr . MAS term
+    6     | expr . MENOS term
+
+    PUNTCOM  desplazar e ir al estado 12
+    MENOS    desplazar e ir al estado 13
+    MAS      desplazar e ir al estado 14
+
+
+Estado 10
+
+    5 expr: term .
+    7 term: term . '*' fact
+    8     | term . '/' fact
+
+    '*'  desplazar e ir al estado 15
+    '/'  desplazar e ir al estado 16
+
+    $default  reduce usando la regla 5 (expr)
+
+
+Estado 11
+
+    9 term: fact .
+
+    $default  reduce usando la regla 9 (term)
+
+
+Estado 12
+
+    3 instr: ID ':' IGUAL expr PUNTCOM .
+
+    $default  reduce usando la regla 3 (instr)
+
+
+Estado 13
+
+    6 expr: expr MENOS . term
+
+    ID   desplazar e ir al estado 7
+    NUM  desplazar e ir al estado 8
+
+    term  ir al estado 17
+    fact  ir al estado 11
+
+
+Estado 14
+
+    4 expr: expr MAS . term
+
+    ID   desplazar e ir al estado 7
+    NUM  desplazar e ir al estado 8
+
+    term  ir al estado 18
+    fact  ir al estado 11
+
+
+Estado 15
+
+    7 term: term '*' . fact
+
+    ID   desplazar e ir al estado 7
+    NUM  desplazar e ir al estado 8
+
+    fact  ir al estado 19
+
+
+Estado 16
+
+    8 term: term '/' . fact
+
+    ID   desplazar e ir al estado 7
+    NUM  desplazar e ir al estado 8
+
+    fact  ir al estado 20
+
+
+Estado 17
+
+    6 expr: expr MENOS term .
+    7 term: term . '*' fact
+    8     | term . '/' fact
+
+    '*'  desplazar e ir al estado 15
+    '/'  desplazar e ir al estado 16
+
+    $default  reduce usando la regla 6 (expr)
+
+
+Estado 18
+
+    4 expr: expr MAS term .
+    7 term: term . '*' fact
+    8     | term . '/' fact
+
+    '*'  desplazar e ir al estado 15
+    '/'  desplazar e ir al estado 16
+
+    $default  reduce usando la regla 4 (expr)
+
+
+Estado 19
+
+    7 term: term '*' fact .
+
+    $default  reduce usando la regla 7 (term)
+
+
+Estado 20
+
+    8 term: term '/' fact .
+
+    $default  reduce usando la regla 8 (term)

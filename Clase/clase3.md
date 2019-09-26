@@ -1,0 +1,44 @@
+### Metodo Shift Reduce Del Analizador Sintactico
+
+Este metodo desplazamiento-reduccion lo usa el parser para determinar si una
+cadena es valida o no 
+
+ejemplo
+expr -> expr - expr
+expr -> NUM
+
+entrada 
+
+2-5-3
+
+arbol 1
+	expr
+	
+ expr  -  expr
+ 			
+ 		expr - expr
+
+arbol 2
+
+			expr
+	
+	  expr  -   expr
+  
+  expr - expr   expr	
+  
+2 arboles ambiguedad
+
+
+| Estdos | Entrada x:=3; |
+| ------ | ------------ |
+| 01 | ID ':'IGUAL NUM PUNTCOM|  
+| 012 |   ':'IGUAL NUM PUNTCOM|
+| 0124 | IGUAL NUM PUNTCOM |
+| 01245 | NUM PUTCOM |
+| 012457 | PUNTCOM go to 5 , fact |
+| 01245(10) | PUNTCOM	go to ( 5 , expr )
+| 001458 | PUNTCOM $ |
+| 012458(11) | go to (1,instr) 	|
+| 013 | $ go to (0 1 ,instr) |
+| 01(20) | $ |
+| 01(20)(21) |	$ aceppt = cadena valida | 
